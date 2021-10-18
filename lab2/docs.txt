@@ -1,0 +1,31 @@
+Github link: https://github.com/FilipPascuti/FLCD
+
+Symbol_table was implemented using the concept of a hash table.
+
+
+    hash_symbol(symbol)
+        - this function hashes the input symbol
+        - input: a symbol which is of type string
+        - output: the the ascii sum modulo the size of the underlying hash table 
+
+    add(symbol):
+        - this function adds a symbol to the table if possible
+        - input: a symbol of type string
+        - output: true if the symbol was added successfully, false otherwise
+
+    search(symbol):
+        - this function searched for a symbol in the table 
+        - input: a symbol of type string
+        - output: true if the symbol is in the table, false otherwise 
+
+    position(symbol):
+        - returns a tuple representing the possition of the symbol in the table
+        - input: a symbol of type string
+        - output: tuple representing the possition of the symbol first value is the hash value and the second is the possition in the bucket
+                  if the symbol is not in the table it is added and it's position is returned
+    
+    remove(symbol):
+        - this method removes a symbol from the table
+        - input: a symbol of type string
+        - output: true if symbol was removed successfully, false otherwise
+
