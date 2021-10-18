@@ -1,0 +1,44 @@
+compute if a number is prime
+
+int n;
+n = readInt();
+
+if (n == 0){
+    print("False");
+}
+
+if (n == 1) {
+    print("False");
+}
+
+if (n == 2){
+    print("True");
+}
+
+int d = 2;
+
+int flag = 0;
+
+while (d < n) {
+    if (flag != 0){
+        d = n;
+    }
+    else{
+        if ( n % 2 == 0)
+            print("False");
+            flag = 1;
+        d = d + 1;
+    }
+}
+
+if (flag == 0) {
+    print("True");
+}
+
+
+
+
+
+
+
+

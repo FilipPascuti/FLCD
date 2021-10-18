@@ -1,0 +1,51 @@
+V1 to add to github
+
+Alphabet:
+    -Upper (A-Z) and lower (a-z) case letters of the English alphabet
+    -Underline character
+    -Decimal digits
+
+    letter = "a"|"b"|...|"z"|"A"|"B"|...|"Z"
+    digit = "0"|non_zero_digit
+    non_zero_digit = "1"|...|"9"
+    symbol = "_"
+
+Special symbols:
+    -operators: +, -, *, /, %, and, or, >, <, >=, <=, !=, ==, =
+    -separators: ( ) { } ; space
+    -reserved words: int, char, string, if, else, while, readInt, read, print
+
+Identifiers:
+    -sequence of letters and digits and underline such that the first character is a letter
+    
+    identifier = letter {(letter|digit|symbol)}
+
+Constants:
+
+    -integer:
+    
+        const_int = "0" | ["+"|"-"] non_zero_digit{digit}
+
+    -character:
+
+        const_character = "'" (letter|digit|symbol) "'"
+
+    -string:
+
+        const_string = """ {letter|digit|symbol}  """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
