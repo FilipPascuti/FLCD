@@ -1,0 +1,14 @@
+int n;
+n = readInt();
+
+int sum = 0;
+
+int x = 0;
+
+while (n > 0){
+    x = readInt();
+    sum = sum + x;
+    n = n - 1;
+}
+
+print(sum)
