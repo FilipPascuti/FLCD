@@ -11,7 +11,7 @@ Alphabet:
     symbol = "_"
 
 Special symbols:
-    -operators: +, -, *, /, %, and, or, >, <, >=, <=, !=, ==, =
+    -operators: +, -, *, /, %, &&, ||, >, <, >=, <=, !=, ==, =
     -separators: ( ) { } ; space
     -reserved words: int, char, string, if, else, while, readInt, read, print
 
@@ -26,13 +26,9 @@ Constants:
     
         const_int = "0" | ["+"|"-"] non_zero_digit{digit}
 
-    -character:
-
-        const_character = "'" (letter|digit|symbol) "'"
-
     -string:
 
-        const_string = """ {letter|digit|symbol}  """
+        const_string = """ {letter|digit|symbol|" "}  """
 
 
 

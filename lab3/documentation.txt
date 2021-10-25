@@ -1,0 +1,36 @@
+Lab3 Documentation
+
+github link: https://github.com/FilipPascuti/FLCD
+
+The scanner has the following methods:
+
+    scan(problem_file)
+        - this method parses the file named problem_file line by line, get the token list for that line and classifies it into one of the following: operator, separator, reserved word, identifier, classifier or error otherwise.
+        - input: problem_file string that contains the name of the file to be scanned
+        - output: pif, identifier_table, constant_table, error_message 
+
+    tokenize(line)
+        - this method parses a line and gets the tokens from it
+        - it parses the line character by character and if it is a part of an operator or separator or a quote it reads the entire operator, separator or string constant, in this case if the current token is not empty it is added to the token list
+        - otherwise it adds the character to the current token
+        - at the end if the current token is not empty it is added to the token list
+        - input: line a string 
+        - output: tokens - the list of tokens
+
+    is_part_of_operator(character)
+        - this method checks if the character is part of any of the operators
+
+    get_operator_token(line, index)
+        - reads the operator starting from that index in the line
+
+    get_string_token(line, index)
+        - reads the string constant starting from that index in the line
+
+    is_identifier(token)
+        - checks if the token is a valid identifier using a regular expresion
+        - a valid identifier is a string that starts with a letter and has one or more letters, digits or underscore sign
+
+    is_constant(token)
+        - checks if the token is a valid constant using a regular expresion
+        - a valid constant is a string that is eather 0 or a number with an optional + or - in front of it, or a combination of letters, digits, underscore sign and space starting and ending with "
+

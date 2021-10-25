@@ -22,7 +22,7 @@
 
     aritmetic_operator =  "+" | "-" | "*" | "/" | "%" 
 
-    relational_operator = "and" | "or" | ">" | "<" | ">=" | "<=" | "==" | "!="
+    relational_operator = "&&" | "||" | ">" | "<" | ">=" | "<=" | "==" | "!="
 
     expression = constant | identifier | identifier"["number"]"
                     | expression aritmetic_operator expression
