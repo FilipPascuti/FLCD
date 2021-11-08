@@ -45,4 +45,9 @@ class Symbol_table:
         return True
 
     def __str__(self) -> str:
-        return f"Simbol table of size: {self.__size} and elements: {self.__table}"
+        result = f"Simbol table of size {self.__size} and elements:\n"
+        
+        for index, value in enumerate(self.__table):
+            result += str(index) + " : " + str(value) + "\n"
+        
+        return result

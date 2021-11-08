@@ -3,7 +3,7 @@ from domain.scanner import Scanner
 def main():
     scanner = Scanner(filename="lab3/input/token.in")
 
-    pif, identifier_table, constant_table, error_message = scanner.scan(problem_file="lab3/input/p2.txt")
+    pif, identifier_table, constant_table, error_message = scanner.scan(problem_file="lab3/input/p1err.txt")
 
     with open("lab3/output/pif.out", "w") as file:
         file.write(str(pif))
