@@ -1,0 +1,34 @@
+https://github.com/FilipPascuti/FLCD
+
+Finite automata:
+    - list for states, alphabet and final states
+    - simple string for initial state
+    - map with current state and symbol as key and the value is a list of all resulting states
+
+check_sequence(sequence)
+    - method that starts from the initial state and checks if there is a transition from the state with the current symbol in the sequence. If possible the current state is changed to the resulting state the current symbol is the next one in sequence
+    input: a string representing a list of symbols
+    output: True if the sequence arrives at a final state
+            False otherwise
+
+EBNF representation:
+
+FA = STATES ALPHABET Q0 FINAL_STATES TRANSITIONS
+STATES = LETTER {, LETTER}
+ALPHABET = DIGIT {, DIGIT}
+Q0 = LETTER
+FINAL_STATES = LETTER {, LETTERS}
+TRANSITIONS = TRANSITION {TRANSITION}
+TRANSITION = "(" LETTER ", " DIGIT ")" " -> " LETTER
+
+
+
+
+
+
+
+
+
+
+
+
