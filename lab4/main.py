@@ -14,12 +14,10 @@ def show_transitions(automata: FiniteAutomata):
     print(string)
 
 def show_final_states(automata: FiniteAutomata):
-    print("the final states are {automata.final_states}\n")
-
-
+    print(f"the final states are {automata.final_states}\n")
 
 def main():
-    automata = FiniteAutomata.read_from_file("lab4/input/fa.in")
+    automata = FiniteAutomata.read_from_file("lab4/input/interger.txt")
 
     while True:
         command = input(">>> ")
@@ -34,12 +32,11 @@ def main():
         elif command == "4":
             show_final_states(automata)
         elif command == "5":
-            sequence = input("input sequence")
+            sequence = input("input sequence\n")
             print(f"{automata.check_sequence(sequence)}\n")
 
-main()
-
-
+if __name__ == "__main__":
+    main()
 
 
 

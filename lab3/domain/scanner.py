@@ -1,6 +1,9 @@
 from domain.PIF import PIF
 from domain.simbol_table import Symbol_table
+from domain.finite_automata import FiniteAutomata
+
 import re
+
 
 NUMBER_OF_RESERVED_WORDS = 9
 NUMBER_OF_OPERATORS = 14
@@ -23,6 +26,10 @@ class Scanner:
                 if separator == "space":
                     separator = " "
                 self.__separators.append(separator)
+
+        self.identifier_automata = FiniteAutomata.read_from_file("lab3/input/identifier.txt")
+        self.integer_constant = FiniteAutomata.read_from_file("lab3/input/interger.txt")
+
 
         # print(self.__operators, self.__separators, self.__reserved_words, sep="\n")
 
@@ -117,11 +124,18 @@ class Scanner:
         return token, index
 
     def __is_identifier(self, token):
-        return re.match(r"^([a-zA-Z][a-zA-z0-9_]*)$", token) is not None
+        # return re.match(r"^([a-zA-Z][a-zA-z0-9_]*)$", token) is not None
+        return self.identifier_automata.check_sequence(token)
+
+    def __is_integer_constant(self, token):
+        return self.integer_constant.check_sequence(token)
+
+    def __is_string_constant(self, token):
+        return re.match(r'^"[a-zA-Z0-9_ ]*"$', token) is not None
 
     def __is_constant(self, token):
-        return re.match(r'^(0|[+-]?[1-9][0-9]*)$|^"[a-zA-Z0-9_ ]*"$', token) is not None
-
+        # return re.match(r'^(0|[+-]?[1-9][0-9]*)$|^"[a-zA-Z0-9_ ]*"$', token) is not None
+        return self.__is_integer_constant(token) or self.__is_string_constant(token)
 
 
 
