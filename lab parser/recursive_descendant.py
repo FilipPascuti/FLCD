@@ -2,6 +2,7 @@ from typing import Sequence
 from grammar import Grammar
 from enum import Enum
 from collections import deque
+from tree import LabeledTree
 
 class State(Enum):
     NORMAL = "q"
@@ -77,6 +78,19 @@ class Recursive_descendent:
             production_string += f"{elem[0]}{elem[1]} "
         return production_string
 
+    def get_parsing_tree(self):
+        production_tree = LabeledTree()
+        for node_index, elem in enumerate(self.working_stack):
+            if elem in self.grammar.get_terminals():
+                production_tree.add_label(node_index, elem)
+                continue
+            production_tree.add_label(node_index, elem[0])
+            children_labels = self.grammar.productions[elem[0]][elem[1]]
+            for child_index, child in enumerate(children_labels):
+                production_tree.add_son(node_index, node_index + child_index)
+        return production_tree.get_table()
+
+
     def start(self):
         while self.state not in [State.FINAL, State.ERROR]:
 
@@ -110,4 +124,3 @@ class Recursive_descendent:
             return self.get_production_string(), "success"
         else:
             return [], "error"
-        
