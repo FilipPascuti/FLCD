@@ -1,11 +1,11 @@
 from grammar import Grammar
-from recursive_descendant import Recursive_descendent
+from recursive_descendent import RecursiveDescendent
 
 def main():
     grammar = Grammar()
     grammar.read_grammar("g1.txt")
 
-    rd = Recursive_descendent(grammar, "aacbc")
+    rd = RecursiveDescendent(grammar, "aacbc", True)
 
     productions, result = rd.start()
 
