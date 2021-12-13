@@ -1,7 +1,8 @@
-from typing import Sequence
-from grammar import Grammar
 from enum import Enum
-from collections import deque
+
+from grammar import Grammar
+from tree import LabeledTree
+
 
 class State(Enum):
     NORMAL = "q"
@@ -9,50 +10,55 @@ class State(Enum):
     FINAL = "f"
     ERROR = "e"
 
-class Recursive_descendent:
-    def __init__(self, grammar: Grammar, sequence) -> None:
+
+class RecursiveDescendent:
+    def __init__(self, grammar: Grammar, sequence, logs=False) -> None:
         self.state = State.NORMAL
         self.grammar = grammar
         self.sequence = sequence
         self.position = 0
         self.working_stack = []
         self.input_stack = [grammar.get_starting_symbol()]
+        self.logs = logs
 
     def expand(self):
-        # print("expand")
+        if self.logs:
+            print("expand")
         non_terminal = self.input_stack[0]
-
         production = self.grammar.productions[non_terminal][0]
-
         self.working_stack.append([non_terminal, 0])
-        
         self.input_stack = production + self.input_stack[1:]
 
     def advance(self):
-        # print("advance")
+        if self.logs:
+            print("advance")
         self.position += 1
         self.working_stack.append(self.input_stack[0]) 
         self.input_stack = self.input_stack[1:]
 
     def momentary_insuccess(self):
-        # print("momentary insuccess")
+        if self.logs:
+            print("momentary insuccess")
         self.state = State.BACK
 
     def back(self):
-        # print("back")
-        # think of the case the top is epsilon
+        if self.logs:
+            print("back")
         self.position -= 1
         self.input_stack = [self.working_stack[-1]] + self.input_stack 
         self.working_stack.pop()
 
     def another_try(self):
-        # print("another_try")
+        if self.logs:
+            print("another_try")
         non_terminal, production_number = self.working_stack[-1]
 
         if production_number < len(self.grammar.productions[non_terminal]) - 1:
-            
             pop_length = len(self.grammar.productions[non_terminal][production_number])
-            self.input_stack = self.grammar.productions[non_terminal][production_number + 1] + self.input_stack[pop_length:]
+            self.input_stack = (
+                    self.grammar.productions[non_terminal][production_number + 1] +
+                    self.input_stack[pop_length:]
+            )
             self.working_stack[-1][1] += 1
             self.state = State.NORMAL
 
@@ -66,7 +72,8 @@ class Recursive_descendent:
             self.input_stack = [non_terminal] + self.input_stack[pop_length:]
 
     def success(self):
-        # print("success")
+        if self.logs:
+            print("success")
         self.state = State.FINAL
 
     def get_production_string(self):
@@ -77,18 +84,32 @@ class Recursive_descendent:
             production_string += f"{elem[0]}{elem[1]} "
         return production_string
 
+    def get_parsing_tree(self):
+        production_tree = LabeledTree()
+        for node_index, elem in enumerate(self.working_stack):
+            if elem in self.grammar.get_terminals():
+                production_tree.add_label(node_index, elem)
+                continue
+            production_tree.add_label(node_index, elem[0])
+            children_labels = self.grammar.productions[elem[0]][elem[1]]
+            for child_index, child in enumerate(children_labels):
+                production_tree.add_son(node_index, node_index + child_index)
+        return production_tree.get_table()
+
     def start(self):
         while self.state not in [State.FINAL, State.ERROR]:
-
-            # print(f"state {self.state}")
-            # print(f"posiiton:{self.position}")
-            # print(f"working stack: {self.working_stack}")
-            # print(f"input stack: {self.input_stack}")
-            # print()
+            if self.logs:
+                print(f"state {self.state}")
+                print(f"position:{self.position}")
+                print(f"working stack: {self.working_stack}")
+                print(f"input stack: {self.input_stack}")
+                print("")
 
             if self.state == State.NORMAL:
-                if self.position == len(self.sequence) and len(self.input_stack) == 0:
+                if self.position == len(self.sequence) and not self.input_stack:
                     self.success()
+                elif not self.input_stack:
+                    self.state = State.BACK
                 else:
                     if self.input_stack[0] in self.grammar.get_non_terminals():
                         self.expand()
@@ -109,5 +130,4 @@ class Recursive_descendent:
         if self.state == State.FINAL:
             return self.get_production_string(), "success"
         else:
-            return [], "error"
-        
+            return None, "error"
