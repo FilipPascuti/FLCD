@@ -5,7 +5,7 @@ def main():
     grammar = Grammar()
     grammar.read_grammar("g1.txt")
 
-    rd = RecursiveDescendent(grammar, "aacbc", True)
+    rd = RecursiveDescendent(grammar, "aacbc", False)
 
     productions, result = rd.start()
 

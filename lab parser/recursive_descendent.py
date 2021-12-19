@@ -84,17 +84,34 @@ class RecursiveDescendent:
             production_string += f"{elem[0]}{elem[1]} "
         return production_string
 
-    def get_parsing_tree(self):
-        production_tree = LabeledTree()
-        for node_index, elem in enumerate(self.working_stack):
+    def get_productions(self):
+        production_string = []
+        for elem in self.working_stack:
             if elem in self.grammar.get_terminals():
-                production_tree.add_label(node_index, elem)
                 continue
-            production_tree.add_label(node_index, elem[0])
-            children_labels = self.grammar.productions[elem[0]][elem[1]]
-            for child_index, child in enumerate(children_labels):
-                production_tree.add_son(node_index, node_index + child_index)
-        return production_tree.get_table()
+            production_string.append(elem)
+        return production_string
+
+    def get_parsing_tree(self):
+        built_tree = LabeledTree()
+        print(self.working_stack)
+
+        def get_rec(node, tree, grammar):
+            if self.working_stack[node] in grammar.get_terminals():
+                tree.add_label(node, self.working_stack[node])
+                return 1
+            label, production_number = self.working_stack[node]
+            tree.add_label(node, label)
+            children_labels = self.grammar.productions[label][production_number]
+            size = 1
+            current = node + 1
+            for child in range(0, len(children_labels)):
+                tree.add_son(node, current)
+                size += get_rec(current, tree, grammar)
+                current = node + size
+            return size
+        get_rec(0, built_tree, self.grammar)
+        return built_tree.get_table()
 
     def start(self):
         while self.state not in [State.FINAL, State.ERROR]:
@@ -128,6 +145,6 @@ class RecursiveDescendent:
                         self.another_try()
 
         if self.state == State.FINAL:
-            return self.get_production_string(), "success"
+            return self.get_parsing_tree(), "success"
         else:
             return None, "error"
