@@ -52,6 +52,7 @@ class Grammar:
             right_symbols = right_side.strip().split(' ')
             self.productions[production_left].append(right_symbols)
 
+
 if __name__ == "__main__":
     grammar = Grammar()
     commands = {
