@@ -24,9 +24,10 @@ while (d < n) {
         d = n;
     }
     else{
-        if ( n % 2 == 0)
+        if ( n % 2 == 0) {
             print("False");
             flag = 1;
+        }
         d = d + 1;
     }
 }

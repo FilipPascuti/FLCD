@@ -25,6 +25,7 @@ class RecursiveDescendent:
         if self.logs:
             print("expand")
         non_terminal = self.input_stack[0]
+        # print(non_terminal)
         production = self.grammar.productions[non_terminal][0]
         self.working_stack.append([non_terminal, 0])
         self.input_stack = production + self.input_stack[1:]
@@ -84,6 +85,13 @@ class RecursiveDescendent:
             production_string += f"{elem[0]}{elem[1]} "
         return production_string
 
+    def get_terminals_string(self):
+        terminals_string = ""
+        for elem in self.working_stack:
+            if elem in self.grammar.get_terminals():
+                terminals_string += f"{elem} "
+        return terminals_string
+
     def get_productions(self):
         production_string = []
         for elem in self.working_stack:
@@ -94,7 +102,6 @@ class RecursiveDescendent:
 
     def get_parsing_tree(self):
         built_tree = LabeledTree()
-        print(self.working_stack)
 
         def get_rec(node, tree, grammar):
             if self.working_stack[node] in grammar.get_terminals():
@@ -110,6 +117,7 @@ class RecursiveDescendent:
                 size += get_rec(current, tree, grammar)
                 current = node + size
             return size
+
         get_rec(0, built_tree, self.grammar)
         return built_tree.get_table()
 
