@@ -41,7 +41,7 @@ class Grammar:
             line = raw_line.strip()
             symbol_groups = line.split('->')
             if len(symbol_groups) != 2:
-                raise GrammarException("Invalid production rule")
+                raise GrammarException(f"Invalid production rule {raw_line}")
             left_side, right_side = symbol_groups
             left_symbols = left_side.strip().split(' ')
             if len(left_symbols) > 1:
@@ -64,7 +64,10 @@ if __name__ == "__main__":
         "is cfg": grammar.get_is_cfg,
     }
     #grammar.read_grammar("g1.txt")
-    commands["read"]("g1.txt")
+    try:
+        commands["read"]("g2.txt")
+    except GrammarException as ex:
+        print(ex)
     current_command = ""
     while current_command != "exit":
         current_command = input("Current command\n")

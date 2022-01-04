@@ -1,48 +1,38 @@
 program
-0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,identifier,constant,int,char,string,;,(,),[,],{,},+,-,*,/,%,&&,||,>,<,>=,<=,==,!=,if,else,while,
-program,statement_list,statement,simple_statement,compound_statement,assignment_statement,declaration_statement,io_statement,if,while_statement,primitive_type,list_type,type,arithmetic_operator,relational_operator,expression,term,factor,identifier,condition,word,number,nonZeroDigit,digit,letter
-
+identifier,constant,int,char,string,;,(,),[,],{,},+,-,*,/,%,&&,||,>,<,>=,<=,==,!=,=,if,else,while,readInt,read,print
+program,statement_list,statement,simple_statement,compound_statement,assignment_statement,declaration_statement,io_statement,if_statement,while_statement,primitive_type,list_type,type,arithmetic_operator,relational_operator,expression,term,factor,condition
 program -> statement_list
-
 statement_list -> statement statement_list
 statement_list -> statement
-
 statement -> simple_statement
 statement -> compound_statement
-
 simple_statement -> assignment_statement ;
 simple_statement -> declaration_statement ;
 simple_statement -> io_statement ;
-
 compound_statement -> if_statement
 compound_statement -> while_statement
-
 primitive_type -> int
 primitive_type -> char
 primitive_type -> string
-
 list_type -> primitive_type [ constant ]
-
 type -> primitive_type
 type -> list_type
-
 arithmetic_operator -> +
 arithmetic_operator -> -
 arithmetic_operator -> *
 arithmetic_operator -> /
 arithmetic_operator -> %
-
-relational_operator = &&
-relational_operator = ||
-relational_operator = >
-relational_operator = <
-relational_operator = >=
-relational_operator = <=
-relational_operator = ==
-relational_operator = !=
-
+relational_operator -> &&
+relational_operator -> ||
+relational_operator -> >
+relational_operator -> <
+relational_operator -> >=
+relational_operator -> <=
+relational_operator -> ==
+relational_operator -> !=
 expression -> term + expression
 expression -> term - expression
+expression -> term % expression
 expression -> term
 term -> factor * term
 term -> factor / term
@@ -50,17 +40,13 @@ term -> factor
 factor -> identifier
 factor -> constant
 factor -> ( expression )
-
 condition -> expression relational_operator expression
-
 declaration_statement -> type identifier
 declaration_statement -> type identifier = expression
-
+assignment_statement -> identifier = expression
 io_statement -> identifier = readInt ( )
 io_statement -> identifier = read ( )
 io_statement -> print ( expression )
-
 if_statement -> if ( condition ) { statement_list }
 if_statement -> if ( condition ) { statement_list } else { statement_list }
-
 while_statement -> while ( condition ) { statement_list }

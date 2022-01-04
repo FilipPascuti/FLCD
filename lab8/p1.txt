@@ -1,0 +1,23 @@
+int a;
+a = readInt();
+int b;
+b = readInt();
+int c;
+c = readInt();
+
+if (a <= b) {
+    if (a <= c) {
+        print(a);
+    }
+    else {
+        print(c);
+    }
+}
+else {
+    if (b <= c) {
+        print(b);
+    }
+    else {
+        print(c);
+    }
+}
